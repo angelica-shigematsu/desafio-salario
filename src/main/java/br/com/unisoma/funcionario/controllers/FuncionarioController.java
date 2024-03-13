@@ -28,9 +28,20 @@ public class FuncionarioController {
 
         Object updateSalary = service.updateSalary(cpf);
 
-        if (updateSalary instanceof String) new ResponseEntity<>(updateSalary, HttpStatus.BAD_REQUEST);
+        if (updateSalary instanceof String) return new ResponseEntity<>(updateSalary, HttpStatus.BAD_REQUEST);
 
         return new ResponseEntity<>(updateSalary, HttpStatus.OK);
+    }
+
+    @GetMapping(value="calculateImposto/{cpf}")
+    public ResponseEntity<Object> showValueTax(@PathVariable String cpf) {
+        Object result = service.printValueTax(cpf);
+
+       if (result instanceof String) {
+           return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+       }
+
+       return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
 }

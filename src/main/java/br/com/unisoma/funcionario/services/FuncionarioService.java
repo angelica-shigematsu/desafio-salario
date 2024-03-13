@@ -85,9 +85,9 @@ public class FuncionarioService {
         int percentual = 0;
         if (salary <= 400.0) {
             percentual = 15;
-        } else if (salary < 800.0) {
+        } else if (salary <= 800.0) {
             percentual= 12;
-        } else if (salary < 1200.0) {
+        } else if (salary <= 1200.0) {
             percentual = 10;
         } else if (salary <= 2000.0) {
             percentual = 7;
@@ -99,6 +99,55 @@ public class FuncionarioService {
     }
     private double calculateSalary(double salary, int percentual) {
         return salary *= (1 + (percentual/100.0));
+    }
+
+    public Object printValueTax(String cpf) {
+        String message = "";
+        if (cpf.isEmpty()) return "Campo vazio";
+
+        Funcionario funcionario = this.repository.findByCpf(cpf);
+
+        if (funcionario == null) return "Não foi possível achar esse cpf";
+
+        double amountTax = this.calculateTax(funcionario.getSalary());
+
+        if (amountTax == 0.0) message = "Insento";
+
+        if (amountTax > 0.0) message = "R$ " + amountTax;
+
+        Map<String,String> showData = new HashMap<>();
+
+
+        showData.put( "CPF", cpf);
+        showData.put( "Imposto:", message);
+
+        return showData;
+    }
+
+
+    private double calculateTax(double salary) {
+
+        double valueTax = 0.0;
+
+        double valueExceed = 0.0;
+
+        double valueFloor = 0.0;
+
+        if (salary <= 2000) {
+            valueTax = 0.0;
+        } else if (salary <= 3000){
+            valueTax = (salary - 2000) * 0.08;
+        } else if (salary <= 4500) {
+            valueFloor = (3000 - 2000) * 0.08;
+            valueExceed = (salary - 3000) * 0.18;
+            valueTax = valueFloor + valueExceed;
+        } else {
+             valueFloor = (4500 - 2000) * 0.18;
+             valueExceed = (salary - 4500) * 0.28;
+             valueTax = valueFloor + valueExceed;
+        }
+
+        return valueTax;
     }
 
 }
