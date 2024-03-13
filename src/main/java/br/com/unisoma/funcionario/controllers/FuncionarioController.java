@@ -17,8 +17,10 @@ public class FuncionarioController {
     @Autowired
     private FuncionarioService service;
     @PostMapping(value="adicionar/funcionario")
-    public ResponseEntity<Funcionario> createFuncionario(@RequestBody FuncionarioDTO dto) {
+    public ResponseEntity<Object> createFuncionario(@RequestBody FuncionarioDTO dto) {
         Funcionario funcionario = service.create(dto);
+
+        if (funcionario == null) return new ResponseEntity<>("CPF, salário e/ou telefone inválido", HttpStatus.BAD_REQUEST);
 
         return new ResponseEntity<>(funcionario, HttpStatus.CREATED);
     }

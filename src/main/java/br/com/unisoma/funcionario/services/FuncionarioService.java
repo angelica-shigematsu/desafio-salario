@@ -18,6 +18,17 @@ public class FuncionarioService {
     private FuncionarioRepository repository;
 
     public Funcionario create(FuncionarioDTO funcionarioDTO) {
+        if (funcionarioDTO.getCpf().length() < 14) return null;
+
+        if (funcionarioDTO.getSalary() < 0.0) return null;
+
+        Funcionario dataFuncionario = this.repository.findByCpf(funcionarioDTO.getCpf());
+
+        if (dataFuncionario != null) return null;
+
+        Funcionario hasPhone = this.repository.findByPhone(funcionarioDTO.getPhone());
+
+        if (hasPhone != null) return null;
 
         Funcionario funcionario = convertEntity(funcionarioDTO);
         return this.repository.save(funcionario);
@@ -111,7 +122,7 @@ public class FuncionarioService {
 
         double amountTax = this.calculateTax(funcionario.getSalary());
 
-        if (amountTax == 0.0) message = "Insento";
+        if (amountTax == 0.0) message = "Isento";
 
         if (amountTax > 0.0) message = "R$ " + amountTax;
 
@@ -125,7 +136,7 @@ public class FuncionarioService {
     }
 
 
-    private double calculateTax(double salary) {
+    public double calculateTax(double salary) {
 
         double valueTax = 0.0;
 
