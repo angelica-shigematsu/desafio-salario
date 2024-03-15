@@ -59,14 +59,14 @@ public class UpdateSalaryService {
         showData.put( "CPF: ",cpf);
         showData.put( "Novo salário: ", Double.toString(newSalary));
         showData.put( "Reajuste de ganho: ", salary);
-        showData.put( "Em percetual: ", Double.toString(percentual));
+        showData.put( "Em percetual: ", Double.toString(percentual) + " %");
 
         return showData.entrySet().stream().sorted(Map.Entry.comparingByValue())
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
     }
 
     private int findPercentual(double salary) {
-        int percentual = 0;
+        int percent sual = 0;
         if (salary <= 400.0) {
             percentual = 15;
         } else if (salary <= 800.0) {
