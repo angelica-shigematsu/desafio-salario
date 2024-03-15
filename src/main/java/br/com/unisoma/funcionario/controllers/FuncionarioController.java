@@ -31,7 +31,7 @@ public class FuncionarioController {
         return new ResponseEntity<>(funcionario, HttpStatus.CREATED);
     }
 
-    @PutMapping(value="calculateSalario/{cpf}")
+    @PutMapping(value="calcular-salario/{cpf}")
     public ResponseEntity<Object> showNewSalary(@PathVariable String cpf) {
 
         Object updateSalary = salaryService.updateSalary(cpf);
@@ -41,7 +41,7 @@ public class FuncionarioController {
         return new ResponseEntity<>(updateSalary, HttpStatus.OK);
     }
 
-    @GetMapping(value="calculateImposto/{cpf}")
+    @GetMapping(value="calcular-imposto/{cpf}")
     public ResponseEntity<Object> showValueTax(@PathVariable String cpf) {
         Object result = taxService.printValueTax(cpf);
 
