@@ -8,8 +8,8 @@
 | Rota                        |     Method    |     
 | ----------------------------| ------------- | 
 | api/adicionar/funcionario   | POST          |
-| api/calculateSalario/{cpf}  | PUT           | 
-| api/calculateImposto/{cpf}  | GET           | 
+| api/calcular-salario/{cpf}  | PUT           | 
+| api/calcular-imposto/{cpf}  | GET           | 
 
 # Tecnologias
 - Java
